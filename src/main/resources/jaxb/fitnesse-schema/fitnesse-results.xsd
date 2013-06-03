@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="testResults">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element type="xs:string" name="FitNesseVersion"/>
+        <xs:element type="xs:string" name="rootPath"/>
+        <xs:element name="result" maxOccurs="unbounded" minOccurs="0">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="counts">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element type="xs:int" name="right"/>
+                    <xs:element type="xs:int" name="wrong"/>
+                    <xs:element type="xs:int" name="ignores"/>
+                    <xs:element type="xs:int" name="exceptions"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element type="xs:int" name="runTimeInMillis"/>
+              <xs:element type="xs:string" name="relativePageName"/>
+              <xs:element type="xs:string" name="pageHistoryLink"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="finalCounts">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element type="xs:int" name="right"/>
+              <xs:element type="xs:int" name="wrong"/>
+              <xs:element type="xs:int" name="ignores"/>
+              <xs:element type="xs:int" name="exceptions"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element type="xs:int" name="totalRunTimeInMillis"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
