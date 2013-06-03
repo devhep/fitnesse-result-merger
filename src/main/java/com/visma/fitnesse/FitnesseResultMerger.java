@@ -14,6 +14,7 @@ import javax.xml.bind.Unmarshaller;
  */
 public class FitnesseResultMerger 
 {
+    private static final String OUTPUT_ARG = "-output:";
     private static JAXBContext jAXBContext;
     private static Unmarshaller jaxbUnmarshaller;
     private static Marshaller jaxbMarshaller;
@@ -29,16 +30,24 @@ public class FitnesseResultMerger
 
         mergedResults = new ObjectFactory().createTestResults();
         mergedResults.setFinalCounts(new ObjectFactory().createTestResultsFinalCounts());
-        
+        String outputFile = null;
         for(String arg: args){
+            if (arg.startsWith(OUTPUT_ARG)){
+                outputFile = arg.replace(OUTPUT_ARG, "");
+                break;
+            }
             TestResults testResults = parseFile(arg);
-            toString(testResults);
-            System.out.println("TestResults.rootPath: " + testResults.getRootPath());
-            System.out.println("TestResults.totalRunTimeMillis: " + testResults.getTotalRunTimeInMillis());  
+            // toString(testResults);
             mergeResult(testResults);
         }
-        toString(mergedResults);
-        jaxbMarshaller.marshal(mergedResults, System.out);
+        // toString(mergedResults);
+        if (outputFile == null){
+            jaxbMarshaller.marshal(mergedResults, System.out);        
+        }
+        else{
+            File out = new File(outputFile);
+            jaxbMarshaller.marshal(mergedResults, out);
+        }
     }
     
     private static TestResults parseFile(String fileName) throws JAXBException{
